@@ -106,6 +106,7 @@ class FormLogController extends ActionController
             $identifierFilter = new ValueFilter($this->settings['export']['types'][$type]['formIdentifier']);
             $filters->setIdentifier($identifierFilter);
             $columns = $this->settings['export']['types'][$type]['columns'];
+            $valueMapper = $this->settings['export']['types'][$type]['valueMapper'];
         }
         $logEntries = $this->formLogEntryRepository->findAllFiltered($filters);
 
@@ -113,6 +114,7 @@ class FormLogController extends ActionController
             'columns' => $columns,
             'dateTimeFormat' => $this->settings['dateTimeFormat'],
             'fileBasename' => $fileBasename,
+            'valueMapper' => $valueMapper ?? [],
         ]);
 
         $export->dump($logEntries);
